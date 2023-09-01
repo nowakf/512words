@@ -12,17 +12,19 @@ typedef struct {
 	uint8_t min_follow;
 	uint8_t max_follow;
 } utf8;
+
 enum {L1 = 1, L2, L3, L4};
 
 const utf8 valid[][3] = {
-//	len	min_s  max_s min_f  max_f
-	[L1] = {{0x00, 0x7f            }           				            },
-	[L2] = {{0xc2, 0xdf, 0x80, 0xbf}           				            },
+//		variant 1		   variant 2		    variant 3
+//	len	mn_s   mx_s  mn_f  mx_f    mn_s   mx_s  mn_f  mx_f   mn_s   mx_s  mn_f  mx_f
+	[L1] = {{0x00, 0x7f  /*x    x*/} /* x     x     x     x       x     x     x     x */},
+	[L2] = {{0xc2, 0xdf, 0x80, 0xbf} /* x     x     x     x       x     x     x     x */},
 	[L3] = {{0xe0, 0xe0, 0xa0, 0xbf}, {0xe1, 0xec, 0x80, 0xbf}, {0xed, 0xed, 0x80, 0x9f}},
 	[L4] = {{0xf0, 0xf0, 0x90, 0xbf}, {0xf1, 0xf3, 0x80, 0xbf}, {0xf4, 0xf4, 0x80, 0x8f}},
 };
 
-#define VARIANT_MAX 4
+#define VARIANT_MAX 3
 
 bool utf8_spec_equal(utf8 a, utf8 b) {
 	return 	a.min_start     == b.min_start
@@ -91,31 +93,31 @@ bool space_available(uint8_t * buf, int start, int len) {
 void get_occupant_probability(occupant *occupants, const uint8_t *buf, int len){
 	uint8_t p1;
 	int v;
+	for (int i=0; i<(len*4); ++i) {
+		occupants[i].index = i;
+	}
+
 	for (int i=0; i<len; ++i) {
 		occupants[i] = (occupant){
 			.likelyhood = PROB_MAX - codepoint_distance(buf+i, L1, 0),
 			.variant = 0,
-			.index = i,
 		};
 		if (i > (len-1)) continue;
 		occupants[i+len] = (occupant){
 			.likelyhood = PROB_MAX - codepoint_distance(buf+i, L2, 0),
 			.variant = 0,
-			.index = i+len,
 		};
 		if (i > (len-2)) continue;
 		v = min_variant(buf+i, 3, &p1);
 		occupants[i+len*2] = (occupant){
 			.likelyhood = PROB_MAX - p1,
 			.variant = v,
-			.index = i+len*2,
 		};
 		if (i > (len-3)) continue;
 		v = min_variant(buf+i, 4, &p1);
 		occupants[i+len*3] = (occupant){
 			.likelyhood = PROB_MAX - p1,
 			.variant = v,
-			.index = i+len*3,
 		};
 	}
 }
@@ -126,11 +128,11 @@ int cmp (const void * a, const void * b) {
 };
 
 void closest_transformation(occupant *probable_occupants, const uint8_t *in, uint8_t *out, int len) {
-	qsort(probable_occupants, len*4, sizeof(int), &cmp);
+	qsort(probable_occupants, len*4, sizeof(occupant), &cmp);
 	memset(out, 0xff, len);
 	int filled = 0;
 	int i = 0;
-	while (filled < (len * 4) && i < (len * 4)) {
+	while ((filled < len) && (i < len)) {
 		occupant o = probable_occupants[i++];
 		int run_len = o.index / len + 1;
 		int buf_index = o.index % len;
@@ -139,5 +141,16 @@ void closest_transformation(occupant *probable_occupants, const uint8_t *in, uin
 			filled += run_len;
 		}
 	}
+}
+
+#include <stdio.h>
+int main(int argc, char ** argv) {
+	int len = strlen(argv[0]);
+	uint8_t * in = (uint8_t *)argv[0];
+	uint8_t * out = malloc(len);
+	occupant * occupants = malloc(len * 4 * sizeof(occupant));
+	get_occupant_probability(occupants, in, len);
+	closest_transformation(occupants, in, out, len);
+	printf("%s\n", out);
 }
 

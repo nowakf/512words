@@ -1,16 +1,28 @@
-//returns the closest utf8 to the arbitrary bytes supplied
-void to_utf8(char * buf, size_t buf_len);
+//returns the next power of 2 less than or equal to n
+//n should never be 0 
+uint32_t next_lesser_power_of_2(uint32_t n);
 
-//returns the difference between the original and converted bytes
-void diff(char * original, char * utf8, size_t len);
+//crops an image. 
+//image w and h must be lower than the crop w and h
+uint8_t * crop(uint8_t * luma, int prev_w, int w, int h);
 
-//cuts non-displaying control characters
-void cut_problem_control_chars(char * string, size_t len);
+//shrinks an image by a factor of 2 on each axis
+void quarter(uint8_t *luma, int w, int h);
 
-//downsizes an image by a factor of two, writes the shrunken image 
-//in the original buffer
-void shrink(uint8_t *luma, int w, int h);
+//desaturates an image
+void rgba2luma(uint8_t *rgba, int len);
 
 //thresholds an image by the supplied 'mid', writing one bit for
 //each thresholded byte in the supplied buffer
 void threshold(uint8_t * luma, int len, uint8_t mid);
+
+//takes an image and returns a png --
+//you need to free this after use	
+void encode_png(uint8_t * png_buf, size_t *png_size, uint8_t *bitmap, int w, int h);
+
+//returns the closest utf8 to the arbitrary bytes supplied
+uint8_t * to_utf8(const uint8_t * in, size_t buf_len);
+
+//returns the difference between the original and converted bytes
+uint8_t * diff(uint8_t * original, uint8_t * utf8, size_t len);
+
