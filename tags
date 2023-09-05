@@ -1484,8 +1484,6 @@ be16toh	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@endian.h	/^#  de
 be32toh	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@endian.h	/^#  define be32toh(/;"	d
 be64toh	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@endian.h	/^#  define be64toh(/;"	d
 bitdepth	lodepng/lodepng.h	/^  unsigned bitdepth;  \/*bits per sample, see PNG standard or documentation further in this head/;"	m	struct:LodePNGColorMode	typeref:typename:unsigned
-bitmap_to_png	/home/francis/src/C/512_words/init.lua	/^function bitmap_to_png(bytes, w, h)$/;"	f
-bitmap_to_png	init.lua	/^function bitmap_to_png(bytes, w, h)$/;"	f
 bits	lodepng/lodepng.h	/^  unsigned bits; \/*bits per channel (not for palette). 1,2 or 4 for grayscale only. 16 if 16-bi/;"	m	struct:LodePNGColorStats	typeref:typename:unsigned
 bitsize	lodepng/lodepng.c	/^  size_t bitsize; \/*size of data in bits, end of valid bp values, should be 8*size*\/$/;"	m	struct:__anona1601e570208	typeref:typename:size_t	file:
 bitwise_clamp	.ccls-cache/@home@francis@src@C@512_words/valid.c	/^uint8_t bitwise_clamp(uint8_t val, uint8_t min, uint8_t max) {$/;"	f	typeref:typename:uint8_t
@@ -1576,13 +1574,12 @@ color_tree_init	lodepng/lodepng.c	/^static void color_tree_init(ColorTree* tree)
 colored	lodepng/lodepng.h	/^  unsigned colored; \/*not grayscale*\/$/;"	m	struct:LodePNGColorStats	typeref:typename:unsigned
 colortype	lodepng/lodepng.h	/^  LodePNGColorType colortype; \/*color type, see PNG standard or documentation further in this h/;"	m	struct:LodePNGColorMode	typeref:typename:LodePNGColorType
 comparison_fn_t	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@stdlib.h	/^typedef __compar_fn_t comparison_fn_t;$/;"	t	typeref:typename:__compar_fn_t
+composite	image.c	/^void composite(uint8_t * rg8, const uint8_t * a, const uint8_t * b, int len) {$/;"	f	typeref:typename:void
 compress	lodepng/lodepng.c	/^unsigned compress(std::vector<unsigned char>& out, const std::vector<unsigned char>& in,$/;"	f	typeref:typename:unsigned
 compress	lodepng/lodepng.c	/^unsigned compress(std::vector<unsigned char>& out, const unsigned char* in, size_t insize,$/;"	f	typeref:typename:unsigned
 compression_method	lodepng/lodepng.h	/^  unsigned compression_method;\/*compression method of the original file. Always 0.*\/$/;"	m	struct:LodePNGInfo	typeref:typename:unsigned
 countZeros	lodepng/lodepng.c	/^static unsigned countZeros(const unsigned char* data, size_t size, size_t pos) {$/;"	f	typeref:typename:unsigned	file:
-crop	/home/francis/src/C/512_words/init.lua	/^function image:crop(w, h)$/;"	f	unknown:image
-crop	image.c	/^uint8_t * crop(uint8_t * luma, int prev_w, int w, int h) {$/;"	f	typeref:typename:uint8_t *
-crop	init.lua	/^function image:crop(w, h)$/;"	f	unknown:image
+crop	image.c	/^void crop(uint8_t * luma, int prev_w, int w, int h) {$/;"	f	typeref:typename:void
 custom_context	lodepng/lodepng.h	/^  const void* custom_context; \/*optional custom settings for custom functions*\/$/;"	m	struct:LodePNGCompressSettings	typeref:typename:const void *
 custom_context	lodepng/lodepng.h	/^  const void* custom_context; \/*optional custom settings for custom functions*\/$/;"	m	struct:LodePNGDecompressSettings	typeref:typename:const void *
 custom_deflate	lodepng/lodepng.h	/^  unsigned (*custom_deflate)(unsigned char**, size_t*,$/;"	m	struct:LodePNGCompressSettings	typeref:typename:unsigned (*)(unsigned char **,size_t *,const unsigned char *,size_t,const LodePNGCompressSettings *)
@@ -1607,10 +1604,9 @@ deflate	lodepng/lodepng.c	/^static unsigned deflate(unsigned char** out, size_t*
 deflateDynamic	lodepng/lodepng.c	/^static unsigned deflateDynamic(LodePNGBitWriter* writer, Hash* hash,$/;"	f	typeref:typename:unsigned	file:
 deflateFixed	lodepng/lodepng.c	/^static unsigned deflateFixed(LodePNGBitWriter* writer, Hash* hash,$/;"	f	typeref:typename:unsigned	file:
 deflateNoCompression	lodepng/lodepng.c	/^static unsigned deflateNoCompression(ucvector* out, const unsigned char* data, size_t datasize) /;"	f	typeref:typename:unsigned	file:
-desaturate	/home/francis/src/C/512_words/init.lua	/^function image:desaturate()$/;"	f	unknown:image
-desaturate	init.lua	/^function image:desaturate()$/;"	f	unknown:image
 dev_t	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@sys@types.h	/^typedef __dev_t dev_t;$/;"	t	typeref:typename:__dev_t
-diff	closest_utf8.c	/^uint8_t * diff(uint8_t * original, uint8_t * utf8, size_t len) {$/;"	f	typeref:typename:uint8_t *
+diff	closest_utf8.c	/^uint8_t * diff(const uint8_t * original, const uint8_t * utf8, size_t len) {$/;"	f	typeref:typename:uint8_t *
+diff	init.lua	/^function image:diff()$/;"	f	unknown:image
 diff	old/closest_utf8.c	/^void diff(uint8_t * original, uint8_t * utf8, size_t len) {$/;"	f	typeref:typename:void
 div_t	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@stdlib.h	/^  } div_t;$/;"	t	typeref:struct:__anonce698ead0108
 drand48_data	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@stdlib.h	/^struct drand48_data$/;"	s
@@ -1801,8 +1797,6 @@ ldiv_t	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@stdlib.h	/^  } ld
 le16toh	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@endian.h	/^#  define le16toh(/;"	d
 le32toh	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@endian.h	/^#  define le32toh(/;"	d
 le64toh	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@endian.h	/^#  define le64toh(/;"	d
-len_bytes	/home/francis/src/C/512_words/init.lua	/^function image:len_bytes()$/;"	f	unknown:image
-len_bytes	init.lua	/^function image:len_bytes()$/;"	f	unknown:image
 lengths	.ccls-cache/@home@francis@src@C@512_words/valid.c	/^const int lengths[] = {$/;"	v	typeref:typename:const int[]
 lengths	lodepng/lodepng.c	/^  unsigned* lengths; \/*the lengths of the huffman codes*\/$/;"	m	struct:HuffmanTree	typeref:typename:unsigned *	file:
 lengths	old/valid.c	/^const int lengths[] = {$/;"	v	typeref:typename:const int[]
@@ -1988,9 +1982,7 @@ mkstemp	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@stdlib.h	/^#   d
 mkstemps	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@stdlib.h	/^#   define mkstemps mkstemps6/;"	d
 mode_t	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@sys@types.h	/^typedef __mode_t mode_t;$/;"	t	typeref:typename:__mode_t
 month	lodepng/lodepng.h	/^  unsigned month;   \/*1-12*\/$/;"	m	struct:LodePNGTime	typeref:typename:unsigned
-new	/home/francis/src/C/512_words/init.lua	/^function image.new(bytes, w, h, format)$/;"	f	unknown:image
 new	init.lua	/^function image.new(bytes, w, h)$/;"	f	unknown:image
-next_lesser_power_of_2	image.c	/^int next_lesser_power_of_2(unsigned int n) {$/;"	f	typeref:typename:int
 nextfree	lodepng/lodepng.c	/^  unsigned nextfree;$/;"	m	struct:BPMLists	typeref:typename:unsigned	file:
 nicematch	lodepng/lodepng.h	/^  unsigned nicematch; \/*stop searching if >= this length found. Set to 258 for best compression/;"	m	struct:LodePNGCompressSettings	typeref:typename:unsigned
 nlink_t	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@sys@types.h	/^typedef __nlink_t nlink_t;$/;"	t	typeref:typename:__nlink_t
@@ -2049,9 +2041,6 @@ pthread_spinlock_t	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@bits@
 pthread_t	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@bits@pthreadtypes.h	/^typedef unsigned long int pthread_t;$/;"	t	typeref:typename:unsigned long int
 ptrdiff_t	.ccls-cache/@@home@francis@src@C@512_words/@usr@lib@clang@14.0.6@include@stddef.h	/^typedef __PTRDIFF_TYPE__ ptrdiff_t;$/;"	t	typeref:typename:__PTRDIFF_TYPE__
 quad_t	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@sys@types.h	/^typedef __quad_t quad_t;$/;"	t	typeref:typename:__quad_t
-quarter	/home/francis/src/C/512_words/init.lua	/^function image:quarter()$/;"	f	unknown:image
-quarter	image.c	/^void quarter(uint8_t * luma, int w, int h) {$/;"	f	typeref:typename:void
-quarter	init.lua	/^function image:quarter()$/;"	f	unknown:image
 quot	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@stdlib.h	/^    int quot;			\/* Quotient.  *\/$/;"	m	struct:__anonce698ead0108	typeref:typename:int
 quot	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@stdlib.h	/^    long int quot;		\/* Quotient.  *\/$/;"	m	struct:__anonce698ead0208	typeref:typename:long int
 quot	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@stdlib.h	/^    long long int quot;		\/* Quotient.  *\/$/;"	m	struct:__anonce698ead0308	typeref:typename:long long int
@@ -2157,9 +2146,8 @@ text_compression	lodepng/lodepng.h	/^  unsigned text_compression;$/;"	m	struct:L
 text_keys	lodepng/lodepng.h	/^  char** text_keys; \/*the keyword of a text chunk (e.g. "Comment")*\/$/;"	m	struct:LodePNGInfo	typeref:typename:char **
 text_num	lodepng/lodepng.h	/^  size_t text_num; \/*the amount of texts in these char** buffers (there may be more texts in it/;"	m	struct:LodePNGInfo	typeref:typename:size_t
 text_strings	lodepng/lodepng.h	/^  char** text_strings; \/*the actual text*\/$/;"	m	struct:LodePNGInfo	typeref:typename:char **
-threshold	/home/francis/src/C/512_words/init.lua	/^function image:threshold(threshold)$/;"	f	unknown:image
-threshold	image.c	/^void threshold(uint8_t * luma, int len, uint8_t mid) {$/;"	f	typeref:typename:void
-threshold	init.lua	/^function image:threshold(threshold)$/;"	f	unknown:image
+threshold	image.c	/^void threshold(const uint8_t * luma, uint8_t *bits, int len, uint8_t mid) {$/;"	f	typeref:typename:void
+threshold	init.lua	/^function threshold(bytes, threshold, len)$/;"	f
 threshold	old/image_downsize.c	/^void threshold(uint8_t * luma, int len, uint8_t mid) {$/;"	f	typeref:typename:void
 time	lodepng/lodepng.h	/^  LodePNGTime time;$/;"	m	struct:LodePNGInfo	typeref:typename:LodePNGTime
 time_defined	lodepng/lodepng.h	/^  unsigned time_defined; \/*set to 1 to make the encoder generate a tIME chunk*\/$/;"	m	struct:LodePNGInfo	typeref:typename:unsigned
@@ -2169,15 +2157,8 @@ timer_t	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@bits@types@timer
 timespec	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@bits@types@struct_timespec.h	/^struct timespec$/;"	s
 timeval	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@bits@types@struct_timeval.h	/^struct timeval$/;"	s
 tmpfile	.ccls-cache/@@home@francis@src@C@512_words/@usr@include@stdio.h	/^#  define tmpfile tmpfile6/;"	d
-to_diff	/home/francis/src/C/512_words/init.lua	/^function image:to_diff()$/;"	f	unknown:image
-to_diff	init.lua	/^function image:to_diff()$/;"	f	unknown:image
-to_png	/home/francis/src/C/512_words/init.lua	/^function image:to_png()$/;"	f	unknown:image
-to_png	init.lua	/^function image:to_png()$/;"	f	unknown:image
-to_string	/home/francis/src/C/512_words/init.lua	/^function image:to_string()$/;"	f	unknown:image
 to_string	init.lua	/^function image:to_string()$/;"	f	unknown:image
-to_utf8	/home/francis/src/C/512_words/init.lua	/^function image:to_utf8()$/;"	f	unknown:image
 to_utf8	closest_utf8.c	/^uint8_t * to_utf8(const uint8_t *in, size_t len) {$/;"	f	typeref:typename:uint8_t *
-to_utf8	init.lua	/^function image:to_utf8()$/;"	f	unknown:image
 to_utf8	old/closest_utf8.c	/^void to_utf8(uint8_t * buf, size_t buf_len) {$/;"	f	typeref:typename:void
 transform	.ccls-cache/@home@francis@src@C@512_words/.ccls-cache@@home@francis@src@C@512_words@closest_2.c	/^void transform(const uint8_t * from, uint8_t *to, int len, int variant) {$/;"	f	typeref:typename:void
 transform	.ccls-cache/@home@francis@src@C@512_words/closest2_2.c	/^void transform(const uint8_t * from, uint8_t *to, int len, int variant) {$/;"	f	typeref:typename:void

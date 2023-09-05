@@ -165,7 +165,7 @@ uint8_t * to_utf8(const uint8_t *in, size_t len) {
 	return out;
 }
 
-uint8_t * diff(uint8_t * original, uint8_t * utf8, size_t len) {
+uint8_t * diff(const uint8_t * original, const uint8_t * utf8, size_t len) {
 	uint8_t * out = malloc(len);
 	for (int i=0; i<len; ++i) {
 		out[i] = original[i] ^ utf8[i];

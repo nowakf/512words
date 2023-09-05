@@ -3,8 +3,7 @@ local ffi = require 'ffi'
 local path = ...
 
 local header = assert(io.open(path .. '/512_words.h')):read('*a') ..
-
-[[ 
+[[
 void free(void *ptr);
 ]]
 
@@ -12,81 +11,58 @@ ffi.cdef(header)
 
 local libwords = ffi.load(path .. '/lib512.so')
 
-local image = {}
-
-local formats = {
-	rgba8 = 4,
-	r8 = 1,
-	r1 = 1/8,
+local image = {
+	w = 0,
+	h = 0,
+	rg8 = nil,
+	utf8 = nil,
+	bits = nil,
 }
 
-function image:crop(w, h)
-	assert(self.w >= w and self.h >= h)
-	self.w = w
-	self.h = h
-	libwords.crop(self.luma, self.w, w, h)
-end
-
-
-function image:quarter()
-	libwords.quarter(self.luma, self.w, self.h)
-	self.w = self.w / 2
-	self.h = self.h / 2
+function threshold(bytes, threshold, len)
+	local bits = ffi.new('uint8_t[?]', len/8)
+	libwords.threshold(bytes, bits, len, threshold)
+	for i=0,len/8 do
+		print(bits[i])
+	end
+	return bits
 end
 
 function image:to_string()
-	local utf8 = self:to_utf8()
-	local str = ffi.string(utf8, self:len_bytes())
-	return str
+	return ffi.string(self.utf8, self.w * self.h / 8)
 end
 
-function image:to_utf8()
-	local utf8 = libwords.to_utf8(self.luma, self:len_bytes())
-	return ffi.gc(utf8, ffi.C.free)
+function image:diff()
+	return ffi.gc(libwords.diff(self.bits, self.utf8, self.w*self.h / 8), ffi.C.free)
 end
 
-function image:len_bytes()
-	return self.w * self.h * formats[self.format]
-end
-
-function image:to_diff()
-	local utf8 = self.utf8 or self:to_utf8()
-	local diff = libwords.diff(self.luma, self.utf8, self:len_bytes())
-	return ffi.gc(diff, ffi.C.free)
-end
-
-function image:desaturate()
-	if self.format ~= 'rgba8' then error('image is already desaturated') end
-	libwords.rgba2luma(self.luma, self:len_bytes())
-	self.format = 'r8'
-end
-
-function image:threshold(threshold)
-	if self.format ~= 'r8' then error('make image desaturated first') end
-	libwords.threshold(self.luma, self:len_bytes(), threshold)
-	self.format = 'r1'
-end
-
-function image:to_png()
-	if self.format ~= 'r8' then error("make image bitmap first") end
-	return bitmap_to_png(self.luma, self.w, self.h)
-end
-
-function bitmap_to_png(bytes, w, h)
-	local png = ffi.new('uint8_t *')
-	local size = ffi.new('uint8_t[1]')
-	libwords.encode_png(png, size, bytes, w, h)
-	return ffi.gc(png, ffi.C.free)
-end
-
-function image.new(bytes, w, h, format)
+function image.new(bytes, w, h)
 	assert(bytes and w and h)
 
+	libwords.rgba2luma(bytes, w*h*4)
+
+	local cw = w - (w%8)
+	local ch = h
+	local thr = 40 --think about this
+
+	libwords.crop(bytes, w, cw, ch)
+
+	local len = cw * ch
+	
+	local bits = threshold(bytes, thr, len)
+
+	local utf8 = ffi.gc(libwords.to_utf8(bits, len/8), ffi.C.free)
+
+	local composite = ffi.new('uint8_t[?]', len*2)
+
+	libwords.composite(composite, bits, utf8, len)
+
 	return setmetatable({
-		w = w,
-		h = h,
-		luma = bytes,
-		format = format or 'rgba8'
+		w = cw,
+		h = ch,
+		rg8 = composite,
+		utf8 = utf8,
+		bits = bits,
 	}, {__index = image})
 end
 
